@@ -55,6 +55,41 @@ mat mat::operator-(mat m){
     }
 }
 
+
+mat mat::operator*(mat m){
+    if(col == m.row)
+    {
+        mat res(row,m.col);
+        for(int i=0;i<row;i++)
+        {
+            std::vector<int> temp;
+            for (int j=0;j<m.col;j++)
+            {
+                int sum = 0;
+                for (int k=0;k<col;k++)
+                {
+                    sum += matrix[i][k]*m.matrix[k][j];
+                }
+                temp.push_back(sum);
+            }
+            res.matrix.push_back(temp);
+        }
+        return res;
+    }
+}
+
+mat mat::transpose(){
+    mat res(col,row);
+    for (int i=0;i<col;i++)
+    {
+        std::vector<int> temp;
+        for (int j=0;j<row;j++)
+            temp.push_back(matrix[j][i]);
+        res.matrix.push_back(temp);
+    }
+    return res;
+}
+
 void mat::dispmat(){
     for(auto vect : matrix)
     {

@@ -9,7 +9,8 @@ class mat{
         void dispmat();
 
         mat operator +(mat m);
-        mat operator -(mat m2);
-        mat operator *(mat m2);
+        mat operator -(mat m);
+        mat operator *(mat m);
+        mat transpose();
 
 };
