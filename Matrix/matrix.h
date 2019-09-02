@@ -11,6 +11,8 @@ class mat{
         mat operator +(mat m);
         mat operator -(mat m);
         mat operator *(mat m);
+        mat operator *(float f);
         mat transpose();
+        float det();
 
 };
