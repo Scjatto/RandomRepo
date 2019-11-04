@@ -52,16 +52,27 @@ mat mat::operator+(mat m){
 }
 
 mat mat::operator-(mat m){
-    if(row == m.row && col == m.col)
+    try
     {
-        mat res(row,col);
-        for(int i=0;i<row;i++)
-        {
-            std::vector<int> temp;
-            for (int j=0;j<col;j++)
-                temp.push_back(matrix[i][j]-m.matrix[i][j]);
-            res.matrix.push_back(temp);
+        bool b = row == m.row && col == m.col;
+        if (!b){
+            throw b;
         }
+    //std::cout<<b<<" "<<!b<<std::endl;
+    mat res(row,col);
+    for(int i=0;i<row;i++)
+    {
+        std::vector<int> temp;
+        for (int j=0;j<col;j++)
+            temp.push_back(matrix[i][j]-m.matrix[i][j]);
+        res.matrix.push_back(temp);
+    }
+    return res;
+    }
+    catch(bool b)
+    {
+        std::cout<<"Invalid dimensions passed"<<std::endl;
+        mat res(row,col);
         return res;
     }
 }
