@@ -1,0 +1,90 @@
+Approach Of Word Embedding Logic For RCA:
+
+Word embeddings are a type of word representation that allows words with similar meaning to have a similar representation.
+*They are a distributed representation for text* that is perhaps one of the key breakthroughs for the impressive performance of deep learning methods on challenging natural language processing problems.
+
+	
+The Visualizations given below is based on an exemplary data (Data: Quora Question Pairs : https://www.kaggle.com/c/quora-question-pairs/data), which shows the cluster of words which are similar, as defined by the 	model. The model used for modeling the sentences, is Word2Vec(Word2Vec is one of the most popular technique to learn word embeddings 	using shallow neural network) and t-SNE(t-Distributed Stochastic Neighbor Embedding : a non-linear technique for dimensionality		reduction that is particularly well suited for the visualization of high-dimensional datasets) for using the model to determine and visualize the similar words. 
+
+Exemplary Visualizations on Word Embeddings
+
+Examples of Embeddings:
+
+1. model.wv["facebook"]
+array([-0.69184226, -0.7147216 ,  0.97107977,  0.03343397, -0.75352925,
+        0.13619885,  0.57424664, -1.7834055 , -0.94808656,  0.81553763,
+        2.2000003 , -1.704764  ,  0.18495885,  0.39749673, -0.32600224,
+        0.48489872, -1.329598  , -0.26173818,  0.44669306,  0.50819355],
+      dtype=float32)
+      
+2. model.wv["digital"]
+array([ 1.4076637 ,  1.1627636 ,  1.2466888 , -0.34563527,  0.16537093,
+       -0.99444234, -0.42440704, -0.13797146,  0.0240955 , -1.1051705 ,
+        0.8098651 ,  1.1770818 ,  0.17585032, -0.58107746, -2.462391  ,
+       -1.4573648 , -0.41653052,  1.4265387 , -0.4140818 ,  1.5044692 ],
+      dtype=float32)
+      
+3. model.wv["2016"]
+array([-0.4394266 ,  0.85065323,  1.0225021 ,  0.4920665 , -0.79133   ,
+         0.5679993 , -1.0253868 , -0.04508452, -0.42373005, -1.129123  ,
+        -0.50786024,  0.22839668,  0.06151391, -0.65200895, -1.5095731 ,
+         0.28815535,  2.1437564 , -0.7241219 ,  0.45188934,  0.8073522 ],
+       dtype=float32)
+
+Examples of similar words (with their cosine distances):
+
+1. model.most_similar("facebook")
+
+ [('instagram', 0.906051754951477),
+  ('delete', 0.9040513038635254),
+  ('snapchat', 0.9015359878540039),
+  ('profile', 0.891007125377655),
+  ('hack', 0.8897430896759033),
+  ('whatsapp', 0.8873180747032166),
+  ('add', 0.8768172264099121),
+  ('password', 0.8224254846572876),
+  ('see', 0.8166435956954956),
+  ('post', 0.8086900115013123)])
+ 
+Screenshot: facebook.png
+
+2. model.most_similar("digital")
+
+[('marketing', 0.9663105010986328),
+  ('course', 0.8312494158744812),
+  ('available', 0.7956881523132324),
+  ('websites', 0.7951774597167969),
+  ('site', 0.7641003727912903),
+  ('online', 0.7367488145828247),
+  ('services', 0.7115693688392639),
+  ('sites', 0.711458683013916),
+  ('free', 0.6954128742218018),
+  ('learning', 0.6901047229766846)])
+
+ Screenshot: digital.png
+ 
+3. model.most_similar("2016")
+
+ [('win', 0.7640550136566162),
+  ('election', 0.7585523128509521),
+  ('presidential', 0.7433742880821228),
+  ('2017', 0.6882118582725525),
+  ('score', 0.6517375111579895),
+  ('usa', 0.649882435798645),
+  ('president', 0.6478419303894043),
+  ('interesting', 0.6339398622512817),
+  ('review', 0.6319197416305542),
+  ('next', 0.6200425624847412)])
+ 
+Template Embeddings and Visualizations in RCA (Proposed)
+
+1. In case of this use case, The words are anologous to the Encodings given to the Templates.
+2. The Encodings, when arranged together will create a sequenced of encodings(analogous to sequence of words, i.e. sentences) 
+3. By training the embedding generation model, we obtain continuous representations of the non-continuous categorical Encodings (of Templates, which are actually text). This helps us to achieve the following:
+	a. Our model will be able to deal with huge cardinality (See Sample embeddings given above)
+	b. Similar templates will be situated close in this embedding space. (Cosine Distances shown above)
+	c. The future RCA, LSTM models will use these embeddings to represent the templates.
+	d. If embedding generation model is properly trained, improvements can be observed in prediction accuracy.
+4. Given the implicit logic for the callflow defined by the 3gpp specifications, the clusters of templates created must be well defined and distinct, and each cluster will comprise contextually similar templates. 
+5. When a new Template is found which has very
+6. The RCA model will take the Templates(or sequence of Templates) marked as anomalous and predict the previous sequence of Templates. Comparing the predicted sequence to the observed actual sequence (in the test data) indicates the variation in the sequence.
